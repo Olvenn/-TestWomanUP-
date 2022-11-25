@@ -6,6 +6,7 @@ import { TodoForm } from './components/temp/temp';
 import 'firebase/firestore';
 import { Todo } from './types/types';
 import { Main } from './components/main/main';
+import firebase from 'firebase';
 
 type AppProps = {
   todoes: Todo[];
