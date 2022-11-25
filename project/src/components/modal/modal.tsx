@@ -1,5 +1,12 @@
 import { ReactNode, useEffect } from 'react';
 
+// type Params = {
+//   onClose: () => void,
+//   children: ReactNode,
+// }
+
+// export function Modal({ children, onClose }: Params): JSX.Element {
+
 type Params = {
   onClose: () => void,
   children: ReactNode,

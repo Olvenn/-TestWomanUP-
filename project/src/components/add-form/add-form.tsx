@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import DatePicker from 'react-date-picker';
-import { collection, addDoc, doc, deleteDoc } from "firebase/firestore";
+import { collection, addDoc } from "firebase/firestore";
 import { db } from '../../index';
 
 export function AddForm(): JSX.Element {
