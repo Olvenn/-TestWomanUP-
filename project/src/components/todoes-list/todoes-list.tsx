@@ -6,7 +6,7 @@ type TodoesListProps = {
   todoes: Todo[];
 }
 
-console.log('dsddваss');
+console.log('dsdsfdаss');
 
 export function TodoesList({ todoes }: TodoesListProps): JSX.Element {
   useEffect(() => {

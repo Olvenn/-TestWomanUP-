@@ -1,7 +1,11 @@
 import { useState } from 'react';
 import { AddTodoModal } from '../add-todo-modal/add-todo-modal';
 
-export function Main(): JSX.Element {
+type Props = {
+  onSave: () => void;
+}
+
+export function Main({ onSave }: Props): JSX.Element {
   const [showNewTodoModal, setShowNewTodoModal] = useState(false);
 
   const handleAddTodo = () => {
@@ -15,7 +19,7 @@ export function Main(): JSX.Element {
   return (
     <div className='main-container'>
       {showNewTodoModal && (
-        <AddTodoModal onClose={handleCloseTodo} />
+        <AddTodoModal onClose={handleCloseTodo} onSave={onSave} />
       )}
       <button
         onClick={handleAddTodo}

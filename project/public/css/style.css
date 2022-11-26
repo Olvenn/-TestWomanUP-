@@ -243,6 +243,19 @@ body {
   padding: 50px;
 }
 
+.modal__wrapper {
+  position: relative;
+
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  justify-content: center;
+
+  width: 100%;
+  min-height: 100%;
+  padding: 60px 40px;
+}
+
 .modal__content {
   display: flex;
   flex-wrap: wrap;
@@ -321,7 +334,7 @@ body {
 .button-cross__icon::before,
 .button-cross__icon::after {
   top: 6.5px;
-  left: -6.5px;
+  left: -1.5px;
   position: absolute;
 
   width: 17px;

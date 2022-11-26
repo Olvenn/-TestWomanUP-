@@ -2,13 +2,14 @@ import { Modal } from '../modal/modal';
 import React, { useState } from 'react';
 import DatePicker from 'react-date-picker';
 import { collection, addDoc } from "firebase/firestore";
-import { db } from '../../index';
+import { db } from '../../db/index';
 
 type Props = {
   onClose: () => void;
+  onSave: () => void;
 }
 
-export function AddTodoModal({ onClose }: Props): JSX.Element {
+export function AddTodoModal({ onClose, onSave }: Props): JSX.Element {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [date, setDate] = useState(new Date());
@@ -21,6 +22,7 @@ export function AddTodoModal({ onClose }: Props): JSX.Element {
         checked: false,
         finishedAt: 'sate',
       });
+      onSave();
       console.log("Document written with ID: ", docRef.id);
     } catch (e) {
       console.error("Error adding document: ", e);

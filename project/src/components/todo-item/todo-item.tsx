@@ -1,6 +1,6 @@
 import { Todo } from '../../types/types';
 import { collection, addDoc, doc, deleteDoc } from "firebase/firestore";
-import { db } from '../../index';
+import { db } from '../../db/index';
 
 type TodoProps = {
   todo: Todo;

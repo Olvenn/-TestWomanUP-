@@ -1,25 +1,49 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { collection, getDocs } from "firebase/firestore";
 import './App.css';
-import { AddForm } from './components/add-form/add-form';
 import { TodoesList } from './components/todoes-list/todoes-list';
 import { TodoForm } from './components/temp/temp';
-import 'firebase/firestore';
-import { Todo } from './types/types';
 import { Main } from './components/main/main';
-import firebase from 'firebase';
+import { Todo } from './types/types';
+import { db } from './db/index';
 
-type AppProps = {
-  todoes: Todo[];
-}
+function App(): JSX.Element {
+  const [todoes, setTodoes] = useState<Todo[]>([]);
+  const getData = async () => {
+    const getDataFormFirebase = await getDocs(collection(db, "todoes"));
+    const data: Todo[] = [];
 
-function App({ todoes }: AppProps): JSX.Element {
+    getDataFormFirebase.forEach((doc) => {
+      const item = {
+        'id': doc.id,
+        'title': doc.data().title,
+        'description': doc.data().description,
+        'checked': doc.data().checked,
+        'finishedAt': doc.data().finishedAt,
+      };
+      data.push(item);
+    });
+
+    return data;
+  };
+
+  const loadTodos = () => {
+    const todoesPromise = getData();
+    todoesPromise.then((result: Todo[]) => {
+      setTodoes(result);
+    })
+  }
+
+  useEffect(() => {
+    loadTodos();
+  }, []);
+
   return (
     <div>
       <p>
         Hello, world!
       </p>
-      <Main />
-      {/* <AddForm /> */}
+      <Main onSave={loadTodos} />
       <TodoesList todoes={todoes} />
       <TodoForm />
     </div>);
