@@ -1,12 +1,5 @@
 import { ReactNode, useEffect } from 'react';
 
-// type Params = {
-//   onClose: () => void,
-//   children: ReactNode,
-// }
-
-// export function Modal({ children, onClose }: Params): JSX.Element {
-
 type Params = {
   onClose: () => void,
   children: ReactNode,
@@ -31,7 +24,6 @@ export function Modal({ children, onClose }: Params): JSX.Element {
   const handleCloseClick = async () => {
     onClose();
   };
-
 
   return (
     <div className="modal__wrapper">

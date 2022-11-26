@@ -4,14 +4,16 @@ import { Todo } from '../..//types/types';
 
 type TodoesListProps = {
   todoes: Todo[];
+  onSave: () => void;
 }
 
 console.log('dsdsfdаss');
 
-export function TodoesList({ todoes }: TodoesListProps): JSX.Element {
+export function TodoesList({ todoes, onSave }: TodoesListProps): JSX.Element {
   useEffect(() => {
     setTodoes(todoes);
-  }, [todoes]);
+    onSave();
+  }, [todoes, onSave]);
 
   const [data, setTodoes] = useState(todoes);
   return (

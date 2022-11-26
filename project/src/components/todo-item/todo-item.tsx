@@ -1,6 +1,7 @@
 import { Todo } from '../../types/types';
 import { collection, addDoc, doc, deleteDoc } from "firebase/firestore";
 import { db } from '../../db/index';
+import dayjs from 'dayjs';
 
 type TodoProps = {
   todo: Todo;
@@ -11,6 +12,9 @@ const handleDeleteClick = async (id: string) => {
 };
 
 export function TodoItem({ todo }: TodoProps): JSX.Element {
+  const finishedAt = dayjs(todo.finishedAt).format('DD MMM YYYY');
+  console.log('finishedAt', dayjs(todo.finishedAt).format('DD MMM YYYY'));
+
   return (
     <div className="container-item modal__content">
       <button
@@ -28,7 +32,7 @@ export function TodoItem({ todo }: TodoProps): JSX.Element {
         {todo.description}
       </div>
       <div className="todo-form__group">
-        {todo.finishedAt}
+        {finishedAt}
       </div>
     </div>
   );

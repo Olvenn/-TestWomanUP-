@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import DatePicker from 'react-date-picker';
 import { collection, addDoc } from "firebase/firestore";
 import { db } from '../../db/index';
+import dayjs from 'dayjs';
 
 type Props = {
   onClose: () => void;
@@ -13,6 +14,8 @@ export function AddTodoModal({ onClose, onSave }: Props): JSX.Element {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [date, setDate] = useState(new Date());
+  console.log('date', dayjs(date).format());
+
 
   const handleTodoClick = async () => {
     try {
@@ -20,7 +23,7 @@ export function AddTodoModal({ onClose, onSave }: Props): JSX.Element {
         title: title,
         description: description,
         checked: false,
-        finishedAt: 'sate',
+        finishedAt: dayjs(date).format(),
       });
       onSave();
       console.log("Document written with ID: ", docRef.id);
@@ -37,15 +40,15 @@ export function AddTodoModal({ onClose, onSave }: Props): JSX.Element {
     setDescription(evt.target.value);
   };
 
-  const handleClearForm = () => {
+  const handleClearForm = (evt: { target: any; }) => {
     setDate(new Date());
     setTitle('');
     setDescription('');
-    console.log('handleClearForm');
+    console.log('handleClearForm', evt.target);
   };
 
   return (
-    <div style={{ position: 'absolute', width: '60%', height: '440px', margin: '0 auto', marginBottom: '50px' }}>
+    <div style={{ position: 'absolute', width: '100%', height: '440px', margin: '0 auto', marginBottom: '50px' }}>
       <div className="modal is-active">
         <Modal onClose={onClose}>
           <header className="header">
@@ -87,6 +90,7 @@ export function AddTodoModal({ onClose, onSave }: Props): JSX.Element {
                   </button>
                   <button
                     onClick={handleClearForm}
+                    type="button"
                     className="btn btn--secondary">
                     Clear
                   </button>

@@ -44,7 +44,7 @@ function App(): JSX.Element {
         Hello, world!
       </p>
       <Main onSave={loadTodos} />
-      <TodoesList todoes={todoes} />
+      <TodoesList todoes={todoes} onSave={loadTodos} />
       <TodoForm />
     </div>);
 }
