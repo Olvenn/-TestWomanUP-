@@ -491,6 +491,19 @@ body {
   width: 100%;
 }
 
+.header__data {
+  padding-top: 40px;
+}
+
+.header__data--text {
+  margin-right: 10px;
+}
+
+.header__data--overdue {
+  color: rgba(133, 15, 15, 0.9);
+  margin-right: 10px;
+}
+
 .todo-form .todo-form__group {
   display: -webkit-box;
   display: -ms-flexbox;

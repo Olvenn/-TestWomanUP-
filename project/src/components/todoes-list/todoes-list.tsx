@@ -1,4 +1,4 @@
-import { TodoItem } from '../todo-item/todo-item';
+import { ListItem } from '../list-item/list-item';
 import { useEffect, useState } from 'react';
 import { Todo } from '../..//types/types';
 
@@ -20,7 +20,7 @@ export function TodoesList({ todoes, onSave }: TodoesListProps): JSX.Element {
       <div className="todoes">
         {data.length ?
           data.map((todo) => (
-            <TodoItem
+            <ListItem
               key={todo.id}
               todo={todo}
               onSave={onSave}

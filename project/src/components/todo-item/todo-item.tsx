@@ -1,42 +1,39 @@
 import { Todo } from '../../types/types';
-import { doc, deleteDoc } from "firebase/firestore";
-import { db } from '../../db/index';
-import dayjs from 'dayjs';
+import { Modal } from '../modal/modal';
+import { humanizeData, getTimeDifference } from '../../utils';
 
 type TodoProps = {
   todo: Todo;
-  onSave: () => void;
+  onClose: () => void;
 }
 
-export function TodoItem({ todo, onSave }: TodoProps): JSX.Element {
-  const finishedAt = dayjs(todo.finishedAt).format('DD MMM YYYY');
-  const isOverdue = dayjs(todo.finishedAt).diff(dayjs((new Date()))) < 0;
-
-  const handleDeleteClick = async (id: string) => {
-    await deleteDoc(doc(db, "todoes", id));
-    onSave()
-  };
+export function TodoItem({ todo, onClose }: TodoProps): JSX.Element {
+  const finishedAt = humanizeData(todo.finishedAt);
+  const isOverdue = getTimeDifference(todo.finishedAt) < 0;
 
   return (
-    <div className={`${isOverdue ? 'container-item modal__content overdue' : 'container-item modal__content'}`}
-      data-title="The todo is overdue.">
-      <button
-        onClick={() => handleDeleteClick(todo.id)}
-        className="modal__close-btn button-cross"
-        type="button"
-        aria-label="Закрыть">
-        <span className="button-cross__icon" />
-        <span className="modal__close-btn-interactive-area" />
-      </button>
-      <div className="todo-title">
-        {todo.title}
+    <div style={{ position: 'absolute', width: '100%', height: '440px', margin: '0 auto', marginBottom: '50px' }}>
+      <div className="modal is-active">
+        <Modal onClose={onClose}>
+          <header className="header">
+            <div className="container-item modal__content">
+              <div className="header__title">
+                {todo.title}
+              </div>
+              <div className="todo-description">
+                {todo.description}
+              </div>
+              <div className="header__data">
+                {isOverdue ?
+                  <span className="header__data--overdue">Todo is overdue:</span> :
+                  <span className="header__data--text">End date:</span>
+                }
+                {finishedAt}
+              </div>
+            </div>
+          </header>
+        </Modal>
       </div>
-      <div className="todo-description">
-        {todo.description}
-      </div>
-      <div className="todo-form__group">
-        {finishedAt}
-      </div>
-    </div>
+    </div >
   );
-}
+};
