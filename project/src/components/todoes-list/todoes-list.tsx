@@ -12,8 +12,7 @@ console.log('dsdsfdаss');
 export function TodoesList({ todoes, onSave }: TodoesListProps): JSX.Element {
   useEffect(() => {
     setTodoes(todoes);
-    onSave();
-  }, [todoes, onSave]);
+  }, [todoes]);
 
   const [data, setTodoes] = useState(todoes);
   return (
@@ -24,6 +23,7 @@ export function TodoesList({ todoes, onSave }: TodoesListProps): JSX.Element {
             <TodoItem
               key={todo.id}
               todo={todo}
+              onSave={onSave}
             />
           ))
           : <div>Start</div>}

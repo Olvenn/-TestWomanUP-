@@ -5,15 +5,15 @@ import dayjs from 'dayjs';
 
 type TodoProps = {
   todo: Todo;
+  onSave: () => void;
 }
 
-const handleDeleteClick = async (id: string) => {
-  await deleteDoc(doc(db, "todoes", id));
-};
-
-export function TodoItem({ todo }: TodoProps): JSX.Element {
+export function TodoItem({ todo, onSave }: TodoProps): JSX.Element {
   const finishedAt = dayjs(todo.finishedAt).format('DD MMM YYYY');
-  console.log('finishedAt', dayjs(todo.finishedAt).format('DD MMM YYYY'));
+  const handleDeleteClick = async (id: string) => {
+    await deleteDoc(doc(db, "todoes", id));
+    onSave()
+  };
 
   return (
     <div className="container-item modal__content">
