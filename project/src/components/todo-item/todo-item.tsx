@@ -5,9 +5,10 @@ import { humanizeData, getTimeDifference } from '../../utils';
 type TodoProps = {
   todo: Todo;
   onClose: () => void;
+  onEdit: () => void;
 }
 
-export function TodoItem({ todo, onClose }: TodoProps): JSX.Element {
+export function TodoItem({ todo, onClose, onEdit }: TodoProps): JSX.Element {
   const finishedAt = humanizeData(todo.finishedAt);
   const isOverdue = getTimeDifference(todo.finishedAt) < 0;
 
@@ -31,6 +32,12 @@ export function TodoItem({ todo, onClose }: TodoProps): JSX.Element {
                 {finishedAt}
               </div>
             </div>
+            <button
+              onClick={onEdit}
+              type="button"
+              className="btn btn--secondary btn--edit">
+              Edit todo
+            </button>
           </header>
         </Modal>
       </div>

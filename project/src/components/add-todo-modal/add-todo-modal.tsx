@@ -1,23 +1,26 @@
 import { Modal } from '../modal/modal';
 import React, { useState } from 'react';
 import DatePicker from 'react-date-picker';
-import { collection, addDoc } from "firebase/firestore";
+import { collection, addDoc, doc, updateDoc } from "firebase/firestore";
 import { db } from '../../db/index';
 import dayjs from 'dayjs';
+import { Todo } from '../../types/types';
 
 type Props = {
   onClose: () => void;
   onSave: () => void;
+  todo: Todo;
 }
 
-export function AddTodoModal({ onClose, onSave }: Props): JSX.Element {
-  const [title, setTitle] = useState('');
-  const [description, setDescription] = useState('');
+export function AddTodoModal({ onClose, onSave, todo }: Props): JSX.Element {
+  const [title, setTitle] = useState(todo.title);
+  const [description, setDescription] = useState(todo.description);
   const [date, setDate] = useState(new Date());
   console.log('date', dayjs(date).format());
 
+  console.log('todo.id', todo.id);
 
-  const handleTodoClick = async () => {
+  const handleAddTodoClick = async () => {
     try {
       const docRef = await addDoc(collection(db, "todoes"), {
         title: title,
@@ -31,6 +34,28 @@ export function AddTodoModal({ onClose, onSave }: Props): JSX.Element {
       console.error("Error adding document: ", e);
     };
   };
+
+  const handleEditTodoClick = async () => {
+    try {
+      const washingtonRef = doc(db, "todoes", todo.id);
+      await updateDoc(washingtonRef, {
+        title: title,
+        description: description,
+        checked: false,
+        finishedAt: dayjs(date).format(),
+      });
+      onSave();
+      console.log("Document written with ID: ", description);
+    } catch (e) {
+      console.error("Error adding document: ", e);
+    };
+  };
+
+  const handleTodoClick = todo.id !== '' ? handleEditTodoClick : handleAddTodoClick;
+
+  // const handleClick: MouseEventHandler = () => {
+  //   handleTodoClick();
+  // };
 
   const handleTitle = (evt: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(evt.target.value);

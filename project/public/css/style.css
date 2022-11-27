@@ -182,6 +182,7 @@ body {
 .btn-container {
   display: flex;
   justify-content: space-between;
+  margin-top: 20px;
 }
 
 .btn.btn--primary {
@@ -189,9 +190,23 @@ body {
   color: #fff;
 }
 
+.btn__new {
+  font-size: 18px;
+  background-color: #007FFF;
+  color: #ffffff;
+  padding: 20px 40px;
+  margin-left: 20px;
+  border-radius: 15px;
+  cursor: pointer;
+}
+
 .btn.btn--secondary {
   background-color: #57595c;
   color: #fff;
+}
+
+.btn--edit {
+  margin: 20px;
 }
 
 /* modal */
@@ -318,6 +333,7 @@ body {
 
 .main-container {
   padding: 50px;
+  width: 100vw;
 }
 
 .button-cross {
@@ -394,7 +410,12 @@ body {
 
 .overdue {
   position: relative;
-  border: 3px solid rgb(133, 15, 15);
+  border: 1px solid rgb(133, 15, 15);
+}
+
+.completed {
+  position: relative;
+  border: 1px solid rgb(27, 15, 133);
 }
 
 .overdue:hover::after {
@@ -405,6 +426,20 @@ body {
   z-index: 1;
   color: #fff;
   background: rgba(133, 15, 15, 0.9);
+  font-family: Arial, sans-serif;
+  font-size: 11px;
+  padding: 5px 10px;
+  border: 1px solid #333;
+}
+
+.completed:hover::after {
+  content: attr(data-title);
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  z-index: 1;
+  color: #fff;
+  background: rgba(37, 15, 133, 0.9);
   font-family: Arial, sans-serif;
   font-size: 11px;
   padding: 5px 10px;
