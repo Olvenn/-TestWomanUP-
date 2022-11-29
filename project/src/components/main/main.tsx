@@ -36,6 +36,64 @@ export function Main({ onSave }: Props): JSX.Element {
     });
   };
 
+  const [urlOne, setUrlOne] = useState('');
+
+  // const starsRef = ref(storage, 'images/catalog-product-1.jpg');
+  // console.log('starsRef', starsRef.fullPath);
+
+  // getDownloadURL(starsRef)
+  //   .then((url) => {
+  //     setUrlOne(url);
+  //   })
+  //   .catch((error) => {
+  //     // A full list of error codes is available at
+  //     // https://firebase.google.com/docs/storage/web/handle-errors
+  //     switch (error.code) {
+  //       case 'storage/object-not-found':
+  //         // File doesn't exist
+  //         break;
+  //       case 'storage/unauthorized':
+  //         // User doesn't have permission to access the object
+  //         break;
+  //       case 'storage/canceled':
+  //         // User canceled the upload
+  //         break;
+
+  //       // ...
+
+  //       case 'storage/unknown':
+  //         // Unknown error occurred, inspect the server response
+  //         break;
+  //     }
+  //   });
+  // console.log(urlOne);
+
+  // https://firebasestorage.googleapis.com/v0/b/todo-test-1148b.appspot.com/o/images%2Frobots.txt?alt=media&token=48fff041-36b4-4bdc-a92a-7ba69ed8faa9
+
+  // getDownloadURL(ref(storage, `images%2Frobots.txt?alt=media&token=48fff041-36b4-4bdc-a92a-7ba69ed8faa9`))
+  //   .then((url) => {
+  //     // `url` is the download URL for 'images/stars.jpg'
+  //     console.log('url', url);
+
+  //     // This can be downloaded directly:
+  //     const xhr = new XMLHttpRequest();
+  //     xhr.responseType = 'blob';
+  //     xhr.onload = (event) => {
+  //       const blob = xhr.response;
+  //     };
+  //     xhr.open('GET', url);
+  //     xhr.send();
+
+  //     // Or inserted into an <img> element
+  //     // const img = document.getElementById('myimg');
+  //     // img.setAttribute('src', url);
+  //   })
+  //   .catch((error) => {
+  //     // Handle any errors
+  //   });
+  // const  starsRef = storage.Child("test.txt");
+  // string link = starsRef.GetDownloadUrlAsync().ToString();
+
   useEffect(() => {
     listAll(imagesListRef).then((response) => {
       response.items.forEach((item) => {
@@ -61,6 +119,30 @@ export function Main({ onSave }: Props): JSX.Element {
 
   const handleCloseTodo = () => {
     setShowNewTodoModal(false);
+  };
+
+  const handleDownload = () => {
+    getDownloadURL(ref(storage, `images/catalog-product-1.jpg`))
+      .then((url) => {
+        // `url` is the download URL for 'images/stars.jpg'
+        console.log('url', url);
+
+        // This can be downloaded directly:
+        const xhr = new XMLHttpRequest();
+        xhr.responseType = 'blob';
+        xhr.onload = (event) => {
+          const blob = xhr.response;
+        };
+        xhr.open('GET', url);
+        xhr.send();
+
+        // Or inserted into an <img> element
+        // const img = document.getElementById('myimg');
+        // img.setAttribute('src', url);
+      })
+      .catch((error) => {
+        // Handle any errors
+      });
   };
 
   return (
@@ -89,9 +171,14 @@ export function Main({ onSave }: Props): JSX.Element {
         {Array.from(urlList).map((url) => {
           return <img src={url} alt="" />;
         })}
-        {Array.from(urlList).map((url) => {
-          return <a href={url} rel="noopener noreferrer" download> Download Here </a>;
-        })}
+        <button
+          onClick={handleDownload}
+          className="btn__new">
+          Download
+        </button>
+        {/* {Array.from(urlList).map((url) => {
+          return <a href="https://firebasestorage.googleapis.com/v0/b/todo-test-1148b.appspot.com/o/images%2Frobots.txt?alt=media&token=48fff041-36b4-4bdc-a92a-7ba69ed8faa9" rel="noopener noreferrer" download> Download Here </a>;
+        })} */}
       </div>
     </div>);
 }
