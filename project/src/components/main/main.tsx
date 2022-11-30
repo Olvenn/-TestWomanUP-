@@ -1,4 +1,4 @@
-import { MouseEventHandler, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { AddTodoModal } from '../add-todo-modal/add-todo-modal';
 import dayjs from 'dayjs';
 import { storage } from '../../db/index';
@@ -20,8 +20,8 @@ export function Main({ onSave }: Props): JSX.Element {
   const [imageUpload, setImageUpload] = useState<any | null>(null);
   const [imageUrls, setImageUrls] = useState<string[]>([]);
   const imagesListRef = ref(storage, "images/");
-  console.log('imageUpload', imageUpload);
-  console.log('imageUrls', imageUrls);
+  // console.log('imageUpload', imageUpload);
+  // console.log('imageUrls', imageUrls);
 
   const urlList = new Set(imageUrls);
 
@@ -36,63 +36,20 @@ export function Main({ onSave }: Props): JSX.Element {
     });
   };
 
-  const [urlOne, setUrlOne] = useState('');
-
-  // const starsRef = ref(storage, 'images/catalog-product-1.jpg');
-  // console.log('starsRef', starsRef.fullPath);
-
-  // getDownloadURL(starsRef)
-  //   .then((url) => {
-  //     setUrlOne(url);
-  //   })
-  //   .catch((error) => {
-  //     // A full list of error codes is available at
-  //     // https://firebase.google.com/docs/storage/web/handle-errors
-  //     switch (error.code) {
-  //       case 'storage/object-not-found':
-  //         // File doesn't exist
-  //         break;
-  //       case 'storage/unauthorized':
-  //         // User doesn't have permission to access the object
-  //         break;
-  //       case 'storage/canceled':
-  //         // User canceled the upload
-  //         break;
-
-  //       // ...
-
-  //       case 'storage/unknown':
-  //         // Unknown error occurred, inspect the server response
-  //         break;
-  //     }
-  //   });
-  // console.log(urlOne);
-
-  // https://firebasestorage.googleapis.com/v0/b/todo-test-1148b.appspot.com/o/images%2Frobots.txt?alt=media&token=48fff041-36b4-4bdc-a92a-7ba69ed8faa9
-
-  // getDownloadURL(ref(storage, `images%2Frobots.txt?alt=media&token=48fff041-36b4-4bdc-a92a-7ba69ed8faa9`))
-  //   .then((url) => {
-  //     // `url` is the download URL for 'images/stars.jpg'
-  //     console.log('url', url);
-
-  //     // This can be downloaded directly:
-  //     const xhr = new XMLHttpRequest();
-  //     xhr.responseType = 'blob';
-  //     xhr.onload = (event) => {
-  //       const blob = xhr.response;
-  //     };
-  //     xhr.open('GET', url);
-  //     xhr.send();
-
-  //     // Or inserted into an <img> element
-  //     // const img = document.getElementById('myimg');
-  //     // img.setAttribute('src', url);
-  //   })
-  //   .catch((error) => {
-  //     // Handle any errors
-  //   });
-  // const  starsRef = storage.Child("test.txt");
-  // string link = starsRef.GetDownloadUrlAsync().ToString();
+  const downloadFile = (url: string, fileName: string) => {
+    fetch(url, { method: 'get', mode: 'no-cors', referrerPolicy: 'no-referrer' })
+      .then(res => res.blob())
+      .then(res => {
+        const aElement = document.createElement('a');
+        aElement.setAttribute('download', fileName);
+        const href = URL.createObjectURL(res);
+        aElement.href = href;
+        // aElement.setAttribute('href', href);
+        aElement.setAttribute('target', '_blank');
+        aElement.click();
+        URL.revokeObjectURL(href);
+      });
+  };
 
   useEffect(() => {
     listAll(imagesListRef).then((response) => {
@@ -124,21 +81,7 @@ export function Main({ onSave }: Props): JSX.Element {
   const handleDownload = () => {
     getDownloadURL(ref(storage, `images/catalog-product-1.jpg`))
       .then((url) => {
-        // `url` is the download URL for 'images/stars.jpg'
-        console.log('url', url);
-
-        // This can be downloaded directly:
-        const xhr = new XMLHttpRequest();
-        xhr.responseType = 'blob';
-        xhr.onload = (event) => {
-          const blob = xhr.response;
-        };
-        xhr.open('GET', url);
-        xhr.send();
-
-        // Or inserted into an <img> element
-        // const img = document.getElementById('myimg');
-        // img.setAttribute('src', url);
+        downloadFile(url, 'catalog-product-1.jpg');
       })
       .catch((error) => {
         // Handle any errors
@@ -156,7 +99,6 @@ export function Main({ onSave }: Props): JSX.Element {
         Add new TODO
       </button>
       <div>
-        {/* <a href={myPDF} download="My_File.pdf"> Download Here </a> */}
         <input
           type="file"
           onChange={(event) => {
@@ -169,16 +111,24 @@ export function Main({ onSave }: Props): JSX.Element {
         />
         <button onClick={uploadFile}>Upload to Firebase</button>
         {Array.from(urlList).map((url) => {
-          return <img src={url} alt="" />;
+          return <img key={url} src={url} alt="" />;
         })}
         <button
-          onClick={handleDownload}
-          className="btn__new">
+          onClick={() => handleDownload()}
+          className="btn__new"
+        >
           Download
+
         </button>
-        {/* {Array.from(urlList).map((url) => {
-          return <a href="https://firebasestorage.googleapis.com/v0/b/todo-test-1148b.appspot.com/o/images%2Frobots.txt?alt=media&token=48fff041-36b4-4bdc-a92a-7ba69ed8faa9" rel="noopener noreferrer" download> Download Here </a>;
-        })} */}
+        {Array.from(urlList).map((url) => {
+          return <button
+            key={url}
+            onClick={() => handleDownload()}
+            className="btn__new"
+          >
+            Download
+          </button>;
+        })}
       </div>
     </div>);
 }

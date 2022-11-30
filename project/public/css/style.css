@@ -185,17 +185,68 @@ body {
   margin-top: 20px;
 }
 
+.header__item {
+  display: flex;
+  flex-direction: column;
+}
+
+.file-upload {
+  width: 100%;
+  margin: 25px;
+}
+
+#input-file__input {
+  display: none;
+}
+
+.file-upload label {
+  cursor: pointer;
+  background: #007FFF;
+  border-radius: 3px;
+  padding: 10px 25px;
+  color: #fff;
+  font-weight: bold;
+  text-align: center;
+  height: auto;
+  width: 50%
+}
+
+.file-upload__wrap-btn {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.input-file__btn {
+  margin-bottom: 20px;
+  color: #007FFF;
+}
+
+.file-upload__btn {
+  padding: 10px 25px;
+  margin-right: 25px;
+  width: 50%
+}
+
+.file-upload label:hover {
+  background: #fc0;
+}
+
 .btn.btn--primary {
   background-color: #007FFF;
   color: #fff;
 }
 
+.download__title {
+  margin-bottom: 20px;
+  margin-left: 25px;
+  color: #007FFF;
+}
+
 .btn__new {
-  font-size: 18px;
-  background-color: #007FFF;
-  color: #ffffff;
-  padding: 20px 40px;
+  align-self: flex-start;
+  padding: 10px 40px;
   margin-left: 20px;
+  border: 1px solid #007FFF;
   border-radius: 15px;
   cursor: pointer;
 }
@@ -454,6 +505,7 @@ body {
 .todo-description {
   font-size: 18px;
   margin-bottom: 10px;
+  margin-left: 25px;
 }
 
 /* Header */
@@ -466,7 +518,7 @@ body {
 .header .header__inner {
   margin: auto;
   width: 100%;
-  max-width: 540px;
+  /* max-width: 540px; */
 }
 
 .header .header__title {
@@ -528,6 +580,7 @@ body {
 
 .header__data {
   padding-top: 40px;
+  margin-left: 25px;
 }
 
 .header__data--text {
