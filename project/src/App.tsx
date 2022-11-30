@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { collection, getDocs } from "firebase/firestore";
 import './App.css';
 import { TodoesList } from './components/todoes-list/todoes-list';
-import { TodoForm } from './components/temp/temp';
 import { Main } from './components/main/main';
 import { Todo } from './types/types';
 import { db } from './db/index';
@@ -36,6 +35,7 @@ function App(): JSX.Element {
 
   useEffect(() => {
     loadTodos();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -45,7 +45,6 @@ function App(): JSX.Element {
       </p>
       <Main onSave={loadTodos} />
       <TodoesList todoes={todoes} onSave={loadTodos} />
-      <TodoForm />
     </div>);
 }
 

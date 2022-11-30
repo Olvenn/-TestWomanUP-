@@ -1,4 +1,4 @@
-import { MouseEventHandler, useState } from 'react';
+import { useState } from 'react';
 import { doc, deleteDoc, updateDoc } from "firebase/firestore";
 import { Todo } from '../../types/types';
 import { db } from '../../db/index';
@@ -18,6 +18,8 @@ export function ListItem({ todo, onSave }: TodoProps): JSX.Element {
 
   const finishedAt = humanizeData(todo.finishedAt);
   const isOverdue = getTimeDifference(todo.finishedAt) < 0;
+  console.log('getTimeDifference(todo.finishedAt)', todo.finishedAt);
+
 
   const handleDeleteClick = async (id: string) => {
     await deleteDoc(doc(db, "todoes", id));
@@ -88,9 +90,6 @@ export function ListItem({ todo, onSave }: TodoProps): JSX.Element {
         <div className="todo-title">
           {todo.title}
         </div>
-        {/* <div className="todo-description">
-          {todo.description}
-        </div> */}
         <div className="todo-form__group">
           {finishedAt}
         </div>

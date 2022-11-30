@@ -8,9 +8,7 @@ import {
   uploadBytes,
   getDownloadURL,
   listAll,
-  list,
 } from "firebase/storage";
-import { v4 } from 'uuid';
 
 type TodoProps = {
   todo: Todo;
@@ -18,27 +16,22 @@ type TodoProps = {
   onEdit: () => void;
 }
 
-type Image = {
-  name: string,
-  url: string,
-}
-
 export function TodoItem({ todo, onClose, onEdit }: TodoProps): JSX.Element {
   const [imageUpload, setImageUpload] = useState<any | null>(null);
-  const [name, setName] = useState<string[]>([]);
+  const [fileName, setFileName] = useState<string[]>([]);
 
   const finishedAt = humanizeData(todo.finishedAt);
   const isOverdue = getTimeDifference(todo.finishedAt) < 0;
 
   const imagesListRef = ref(storage, `${todo.id}/`);
-  const nameList = new Set(name);
+  const nameList = new Set(fileName);
 
   const uploadFile = () => {
     if (imageUpload === null) return;
     const imageRef = ref(storage, `${todo.id}/${imageUpload.name}`);
     uploadBytes(imageRef, imageUpload).then((snapshot) => {
       getDownloadURL(snapshot.ref).then((url) => {
-        setName((prev) => [...prev, imageUpload.name]);
+        setFileName((prev) => [...prev, imageUpload.name]);
       });
     });
   };
@@ -47,7 +40,7 @@ export function TodoItem({ todo, onClose, onEdit }: TodoProps): JSX.Element {
     listAll(imagesListRef).then((response) => {
       response.items.forEach((item) => {
         getDownloadURL(item).then((url) => {
-          setName((prev) => [...prev, item.name]);
+          setFileName((prev) => [...prev, item.name]);
         });
       });
     });
@@ -127,7 +120,7 @@ export function TodoItem({ todo, onClose, onEdit }: TodoProps): JSX.Element {
               return <div
                 key={name}
                 onClick={() => handleDownload(name)}
-                className="btn__new"
+                className="btn__file"
               >
                 {name}
               </div>;

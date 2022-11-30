@@ -228,7 +228,7 @@ body {
 }
 
 .file-upload label:hover {
-  background: #fc0;
+  background: #555
 }
 
 .btn.btn--primary {
@@ -242,12 +242,22 @@ body {
   color: #007FFF;
 }
 
-.btn__new {
+.btn__file {
   align-self: flex-start;
   padding: 10px 40px;
   margin-left: 20px;
   border: 1px solid #007FFF;
   border-radius: 15px;
+  cursor: pointer;
+}
+
+.btn__new {
+  align-self: flex-start;
+  padding: 20px 50px;
+  margin-left: 20px;
+  background-color: #007FFF;
+  border-radius: 15px;
+  color: #ffffff;
   cursor: pointer;
 }
 
