@@ -1,3 +1,19 @@
+# The test task is to write a todo list.
+
+### Functional:
+- create, view, edit (change fields or that the task is completed) and delete the task  
+- ability to attach files to a record  
+- fields in the task: title, description, completion date, attached files  
+- if the completion date has expired or the task has been completed, it should be visually marked  
+- comment out the code in JSDoc and upload it to gitlab.  
+
+### Use:
+— React;  
+— components as functions, not as classes;  
+— hooks;  
+— github for “layout".  
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
