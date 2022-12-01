@@ -2,6 +2,6 @@ export type Todo = {
   id: string;
   title: string;
   description: string;
-  checked: boolean;
+  isComplete: boolean;
   finishedAt: string;
 }

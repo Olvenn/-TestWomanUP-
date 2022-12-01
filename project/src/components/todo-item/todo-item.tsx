@@ -99,7 +99,6 @@ export function TodoItem({ todo, onClose, onEdit }: TodoProps): JSX.Element {
                     onChange={(event) => {
 
                       if (event.target.files && event.target.files?.length > 0) {
-                        console.log(event.target.files[0]);
                         setImageUpload(event.target.files[0]);
                       }
                     }}
@@ -113,7 +112,6 @@ export function TodoItem({ todo, onClose, onEdit }: TodoProps): JSX.Element {
                   Upload to Firebase
                 </button>
               </div>
-
             </div>
             <div className="download__title ">Download the file to your computer</div>
             {Array.from(nameList).map((name) => {

@@ -7,13 +7,27 @@ type Props = {
 }
 
 export function Main({ onSave }: Props): JSX.Element {
+  /**
+   * The state for determining whether the modal window for adding a new one is open or closed todo
+   * @type {[Boolean, Function]} Loading
+   */
   const [showNewTodoModal, setShowNewTodoModal] = useState(false);
+
+  /**
+   * Default value of todo
+   * @type {{
+   * id: string, 
+   * title: string, 
+   * description: string, 
+   * isComplete: boolean, 
+   * finishedAt: string }}
+   */
 
   const todo = {
     id: '',
     title: '',
     description: '',
-    checked: false,
+    isComplete: false,
     finishedAt: dayjs(new Date()).format(),
   }
 

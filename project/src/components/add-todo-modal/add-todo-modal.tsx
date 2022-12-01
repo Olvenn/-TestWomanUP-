@@ -13,25 +13,35 @@ type Props = {
 }
 
 export function AddTodoModal({ onClose, onSave, todo }: Props): JSX.Element {
+  /**
+   * The state for todo title
+   * @type {[string, Function]} Loading
+   */
   const [title, setTitle] = useState(todo.title);
+  /**
+   * The state for todo title
+   * @type {[string, Function]} Loading
+   */
   const [description, setDescription] = useState(todo.description);
+  /**
+   * The state for todo title
+   * @type {[Date, Function]} Loading
+   */
   const [date, setDate] = useState(new Date());
-  console.log('date', dayjs(date).format());
-
-  console.log('todo.id', todo.id);
 
   const handleAddTodoClick = async () => {
     try {
       const docRef = await addDoc(collection(db, "todoes"), {
         title: title,
         description: description,
-        checked: false,
+        isComplete: false,
         finishedAt: dayjs(date).format(),
       });
       onSave();
+      onClose();
       console.log("Document written with ID: ", docRef.id);
     } catch (e) {
-      console.error("Error adding document: ", e);
+      console.error(`Error adding document: `, e);
     };
   };
 
@@ -41,21 +51,17 @@ export function AddTodoModal({ onClose, onSave, todo }: Props): JSX.Element {
       await updateDoc(washingtonRef, {
         title: title,
         description: description,
-        checked: false,
+        isComplete: false,
         finishedAt: dayjs(date).format(),
       });
       onSave();
-      console.log("Document written with ID: ", description);
+      onClose();
     } catch (e) {
       console.error("Error adding document: ", e);
     };
   };
 
   const handleTodoClick = todo.id !== '' ? handleEditTodoClick : handleAddTodoClick;
-
-  // const handleClick: MouseEventHandler = () => {
-  //   handleTodoClick();
-  // };
 
   const handleTitle = (evt: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(evt.target.value);
@@ -69,7 +75,6 @@ export function AddTodoModal({ onClose, onSave, todo }: Props): JSX.Element {
     setDate(new Date());
     setTitle('');
     setDescription('');
-    console.log('handleClearForm', evt.target);
   };
 
   return (

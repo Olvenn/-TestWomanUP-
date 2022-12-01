@@ -14,5 +14,10 @@ export const getTimeDifference = (timeEnd: string) => dayjs(timeEnd).diff(dayjs(
  */
 export const humanizeData = (date: string) => dayjs(date).format('DD MMM YYYY');
 
-
+/**
+ * Auxiliary function for sorting by date
+ * @param { string } todoA - The first date for comparison
+ * @param { string } todoB  -The second date for comparison
+ * @returns { number } - >0, < 0 on 0
+ */
 export const sortByDay = (todoA: string, todoB: string) => dayjs(todoA).valueOf() - dayjs(todoB).valueOf();

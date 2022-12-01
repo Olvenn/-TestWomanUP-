@@ -4,8 +4,22 @@ import { collection, addDoc } from "firebase/firestore";
 import { db } from '../../db/index';
 
 export function AddForm(): JSX.Element {
+  /**
+   * The state for todo title
+   * @type {[string, Function]} Loading
+   */
   const [title, setTitle] = useState('');
+
+  /**
+   * The state for todo title
+   * @type {[string, Function]} Loading
+   */
   const [description, setDescription] = useState('');
+
+  /**
+   * The state for todo title
+   * @type {[Date, Function]} Loading
+   */
   const [date, setDate] = useState(new Date());
 
   const handleTodoClick = async () => {
@@ -13,7 +27,7 @@ export function AddForm(): JSX.Element {
       const docRef = await addDoc(collection(db, "todoes"), {
         title: title,
         description: description,
-        checked: false,
+        isComplete: false,
         finishedAt: 'sate',
       });
       console.log("Document written with ID: ", docRef.id);
@@ -34,7 +48,6 @@ export function AddForm(): JSX.Element {
     setDate(new Date());
     setTitle('');
     setDescription('');
-    console.log('handleClearForm');
   };
 
   return (
